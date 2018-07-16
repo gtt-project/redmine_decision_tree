@@ -1,0 +1,7 @@
+<% if RedmineDecisionTree.supports_format? custom_field.field_format %>
+
+<p>
+  <%= form.text_area :decision_tree_json, rows: 7 %>
+</p>
+
+<% end %>
