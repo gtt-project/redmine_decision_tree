@@ -15,7 +15,6 @@ module RedmineDecisionTree
     def decision_tree_tag(view, tag_id, custom_value)
       field = custom_value.custom_field
       obj = JSON.parse(field.decision_tree_json) rescue nil
-      byebug
       return if obj.blank?
 
       tree_json_var = "#{tag_id}_decision_tree"
