@@ -1,7 +1,7 @@
 module RedmineDecisionTree
   module FieldFormatPatch
     def self.apply
-      RedmineDecisionTree::SUPPORTED_FIELD_TYPES.each do |klass|
+      RedmineDecisionTree::SUPPORTED_FIELD_FORMATS.each do |klass|
         klass.prepend self
       end
     end
