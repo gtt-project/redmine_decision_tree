@@ -1,8 +1,15 @@
 module RedmineDecisionTree
   module FieldFormatPatch
+    SUPPORTED_FIELD_FORMATS = [
+        # this includes LinkFormat (which is a subclass of StringFormat)
+        Redmine::FieldFormat::StringFormat,
+        Redmine::FieldFormat::TextFormat,
+    ].freeze
+
+
     def self.apply
-      RedmineDecisionTree::SUPPORTED_FIELD_FORMATS.each do |klass|
-        klass.prepend self
+      SUPPORTED_FIELD_FORMATS.each do |klass|
+        klass.prepend self unless klass < self
       end
     end
 
@@ -14,18 +21,11 @@ module RedmineDecisionTree
 
     def decision_tree_tag(view, tag_id, custom_value)
       field = custom_value.custom_field
-      obj = JSON.parse(field.decision_tree_json) rescue nil
-      return if obj.blank?
-
-      tree_json_var = "#{tag_id}_decision_tree"
-
-      view.content_tag(:a, 'tree', href: "#",
-                                   class: "decision-tree-trigger",
-                                   data: { tree_json: tree_json_var }) +
-      view.javascript_tag(<<-JS
-        window.#{tree_json_var} = #{obj.to_json};
-      JS
-      )
+      if field.decision_tree_json.present?
+        view.link_to('tree', view.decision_tree_path(field.id, tag_id: tag_id), data: { remote: true })
+      else
+        ''
+      end
     end
 
   end

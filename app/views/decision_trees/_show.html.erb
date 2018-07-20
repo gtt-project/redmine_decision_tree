@@ -1,0 +1,23 @@
+<h3 class="title"><%= @field.name %></h3>
+
+<%= form_tag decision_tree_path(@field.id), remote: true do %>
+  <%= hidden_field_tag :progress, @progress %>
+  <%= hidden_field_tag :tag_id, params[:tag_id] %>
+
+  <p>
+    <%= @question %>
+  </p>
+  <% @answers.each_with_index do |answer, idx| %>
+    <p>
+      <%= radio_button_tag 'answer', idx, false, id: "answer-#{idx}" %>
+      <%= label_tag "answer-#{idx}", answer['option'] %>
+    </p>
+  <% end %>
+
+
+  <p class="buttons">
+    <%= submit_tag l(:button_submit), eame: nil, onclick: "hideModal(this);" %>
+    <%= submit_tag l(:button_cancel), name: nil, onclick: "hideModal(this);", type: 'button' %>
+  </p>
+
+<% end %>

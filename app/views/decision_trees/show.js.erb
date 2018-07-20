@@ -1,0 +1,8 @@
+<% if @value %>
+  $('#<%= j params[:tag_id] %>').val('<%= j @value %>');
+  hideModal('ajax-modal');
+<% else %>
+  $('#ajax-modal').html('<%= j render partial: 'decision_trees/show' %>');
+  showModal('ajax-modal', '400px');
+<% end %>
+
