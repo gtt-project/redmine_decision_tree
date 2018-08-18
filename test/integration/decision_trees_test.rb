@@ -11,22 +11,22 @@ class DecisionTreesTest < Redmine::IntegrationTest
     EnabledModule.delete_all
     EnabledModule.create! project: @project, name: 'issue_tracking'
     @issue = @project.issues.first
-    @cf = IssueCustomField.create! projects: [@project], name: 'wizard', decision_tree_json: DECISION_TREE, field_format: 'string'
+    @cf = IssueCustomField.create! projects: [@project], name: 'wizard', decision_tree_json: DECISION_TREE, field_format: 'string', visible: false, role_ids: [ 1 ]
   end
 
   def test_no_access_for_anonymous
-    xhr :get, "/decision_tree/#{@issue.id}/#{@cf.id}"
+    xhr :get, "/decision_tree/#{@cf.id}"
     assert_response 401
   end
 
   def test_tree
     log_user 'jsmith', 'jsmith'
 
-    xhr :get, "/decision_tree/#{@issue.id}/#{@cf.id}"
+    xhr :get, "/decision_tree/#{@cf.id}"
     assert_response :success
     assert_match(/how old are you/i, @response.body)
 
-    xhr :get, "/decision_tree/#{@issue.id}/#{@cf.id}", progress: '', answer: '0'
+    xhr :get, "/decision_tree/#{@cf.id}", progress: '', answer: '0'
     assert_response :success
     assert_match(/where do you live/i, @response.body)
 

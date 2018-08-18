@@ -1,9 +1,8 @@
 class DecisionTreesController < ApplicationController
 
-  before_action :authorize
+  before_action :authorize_field
 
   def show
-    @field = CustomField.find params[:field_id]
     tree = DecisionTree.new @field.decision_tree_json
     tree.set_progress params[:progress], params[:answer]
 
@@ -21,8 +20,9 @@ class DecisionTreesController < ApplicationController
 
   private
 
-  def authorize
-    # TODO get projects where CF is active, check user's access to these (?)
+  def authorize_field
+    @field = CustomField.visible.find_by_id params[:field_id]
+    @field.present? || deny_access
   end
 
 end
