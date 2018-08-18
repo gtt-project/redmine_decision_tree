@@ -22,7 +22,7 @@ module RedmineDecisionTree
     def decision_tree_tag(view, tag_id, custom_value)
       field = custom_value.custom_field
       if field.decision_tree_json.present?
-        view.link_to('tree', view.decision_tree_path(field.id, tag_id: tag_id), data: { remote: true })
+        view.button_tag(I18n.t('label_decision_tree_button'), type: 'button', data: { url: view.decision_tree_path(field.id, tag_id: tag_id) }, class: 'decision-tree');
       else
         ''
       end
