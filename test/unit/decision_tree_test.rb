@@ -5,6 +5,19 @@ class DecisionTreeTest < ActiveSupport::TestCase
     @tree = DecisionTree.new DECISION_TREE
   end
 
+  test "should validate json contents" do
+    assert t = DecisionTree.new([1,2,3].to_json)
+    refute t.valid?
+
+    assert @tree.valid?
+  end
+
+  test "should raise on invalid json" do
+    assert_raise {
+      DecisionTree.new 'foobar'
+    }
+  end
+
   test "should have first question" do
     @tree.set_progress nil, nil
     assert_equal '', @tree.progress
