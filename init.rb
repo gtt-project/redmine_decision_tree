@@ -11,7 +11,7 @@ Redmine::Plugin.register :redmine_decision_tree do
 
 end
 
-ActionDispatch::Callbacks.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   RedmineDecisionTree.setup
 end
 
