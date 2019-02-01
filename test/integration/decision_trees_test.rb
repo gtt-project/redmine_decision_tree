@@ -15,18 +15,18 @@ class DecisionTreesTest < Redmine::IntegrationTest
   end
 
   def test_no_access_for_anonymous
-    xhr :get, "/decision_tree/#{@cf.id}"
+    get "/decision_tree/#{@cf.id}", xhr: true
     assert_response 401
   end
 
   def test_tree
     log_user 'jsmith', 'jsmith'
 
-    xhr :get, "/decision_tree/#{@cf.id}"
+    get "/decision_tree/#{@cf.id}", xhr: true
     assert_response :success
     assert_match(/how old are you/i, @response.body)
 
-    xhr :get, "/decision_tree/#{@cf.id}", progress: '', answer: '0'
+    get "/decision_tree/#{@cf.id}", xhr: true, params: { progress: '', answer: '0'}
     assert_response :success
     assert_match(/where do you live/i, @response.body)
 
