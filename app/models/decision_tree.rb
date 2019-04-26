@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class DecisionTree
-  attr_reader :current_data, :value, :progress
+  attr_reader :current_data, :value, :progress, :intermediate_values
   def initialize(json)
     @data = JSON.parse json
   end
@@ -9,10 +11,16 @@ class DecisionTree
     answers << current_answer if current_answer
     @progress = answers.join(",")
     @current_data = @data
+    @intermediate_values = {}
     while a = answers.shift
       @current_data = @current_data["answers"][a.to_i]
+      if target = @current_data["target"] and
+         value = @current_data["value"]
+
+        @intermediate_values[target] = value
+      end
     end
-    if @value = @current_data["value"]
+    if @value = @current_data["value"] and @current_data["question"].blank?
       @finished = true
     end
   end

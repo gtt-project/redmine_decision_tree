@@ -27,6 +27,17 @@ class DecisionTreeTest < ActiveSupport::TestCase
     assert_equal 2, answers.size
   end
 
+  test "should have intermediate values" do
+    @tree.set_progress '', '0'
+    refute @tree.finished?
+    assert_equal "result1", @tree.intermediate_values["field"]
+
+    @tree = DecisionTree.new DECISION_TREE
+    @tree.set_progress '0', '1'
+    refute @tree.finished?
+    assert_equal "result1", @tree.intermediate_values["field"]
+  end
+
   test "should have followup question" do
     @tree.set_progress '', '0'
     assert_equal '0', @tree.progress
@@ -49,5 +60,6 @@ class DecisionTreeTest < ActiveSupport::TestCase
     @tree.set_progress '0,1', '1'
     assert @tree.finished?
     assert_equal 'postal vote', @tree.value
+    assert_equal "result1", @tree.intermediate_values["field"]
   end
 end

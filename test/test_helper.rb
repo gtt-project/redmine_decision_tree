@@ -5,6 +5,8 @@ DECISION_TREE = <<-JSON
     "question": "How old are you?",
     "answers": [{
         "option": "I'm older than 18 years.",
+        "value": "result1",
+        "target": "field",
         "question": "Where do you live?",
         "answers": [{
             "option": "I'm living in Germany.",

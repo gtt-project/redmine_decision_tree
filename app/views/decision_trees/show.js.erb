@@ -1,5 +1,19 @@
 <% if @value %>
-  $('#<%= j params[:tag_id] %>').val('<%= j @value %>');
+  var target_field = $('#<%= j params[:tag_id] %>');
+  target_field.val('<%= j @value %>');
+
+  var label_spans = target_field.parents('form').find('label span');
+  <% @intermediate_values.each do |field, value| %>
+    var field = '<%= j field %>';
+    var span = $.grep(label_spans, function(e){
+      return $(e).text() == field;
+    })[0];
+    if(span){
+      $(span).parent().next('input').val('<%= j value %>');
+    }
+    $('#<%= j params[:tag_id] %>').val('<%= j @value %>');
+  <% end if @intermediate_values %>
+
   hideModal('ajax-modal');
 <% else %>
   $('#ajax-modal').html('<%= j render partial: 'decision_trees/show' %>');

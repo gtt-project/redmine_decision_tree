@@ -8,6 +8,7 @@ class DecisionTreesController < ApplicationController
 
     if tree.finished?
       @value = tree.value
+      @intermediate_values = tree.intermediate_values
     else
       data = tree.current_data
       @question = data['question']
