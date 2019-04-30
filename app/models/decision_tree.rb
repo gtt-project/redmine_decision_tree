@@ -15,9 +15,9 @@ class DecisionTree
     while a = answers.shift
       @current_data = @current_data["answers"][a.to_i]
       if target = @current_data["target"] and
-         value = @current_data["value"]
+         intermediate_value = @current_data["intermediate_value"]
 
-        @intermediate_values[target] = value
+        @intermediate_values[target] = intermediate_value
       end
     end
     if @value = @current_data["value"] and @current_data["question"].blank?
