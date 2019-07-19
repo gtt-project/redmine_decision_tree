@@ -9,13 +9,16 @@
   </p>
   <% @answers.each_with_index do |answer, idx| %>
     <p>
-      <%= radio_button_tag 'answer', idx, false, id: "answer-#{idx}" %>
+      <%= radio_button_tag 'answer', idx, idx == @selected_answer, id: "answer-#{idx}" %>
       <%= label_tag "answer-#{idx}", answer['option'] %>
     </p>
   <% end %>
 
 
   <p class="buttons">
+  <% if @progress.present? %>
+    <%= submit_tag l(:label_previous), name: 'back', onclick: "hideModal(this);" %>
+  <% end %>
     <%= submit_tag l(:label_next), name: nil, onclick: "hideModal(this);" %>
     <%= submit_tag l(:button_cancel), name: nil, onclick: "hideModal(this);", type: 'button' %>
   </p>

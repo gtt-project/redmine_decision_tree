@@ -25,6 +25,18 @@ class DecisionTree
     end
   end
 
+  # moves back one step, returns the id of the last answer
+  def back(progress)
+    progress = progress.split ','
+    if progress.any?
+      previous_answer = progress.pop.to_i
+      set_progress progress.join(','), nil
+      previous_answer
+    else
+      ''
+    end
+  end
+
   def finished?
     !!@finished
   end

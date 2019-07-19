@@ -4,7 +4,11 @@ class DecisionTreesController < ApplicationController
 
   def show
     tree = DecisionTree.new @field.decision_tree_json
-    tree.set_progress params[:progress], params[:answer]
+    if params[:back].present?
+      @selected_answer = tree.back params[:progress]
+    else
+      tree.set_progress params[:progress], params[:answer]
+    end
 
     if tree.finished?
       @value = tree.value

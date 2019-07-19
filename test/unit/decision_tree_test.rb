@@ -55,6 +55,18 @@ class DecisionTreeTest < ActiveSupport::TestCase
     assert_equal 3, answers.size
   end
 
+  test "should go back" do
+    @tree = DecisionTree.new DECISION_TREE
+    assert_equal 1, @tree.back('0,1')
+
+    refute @tree.finished?
+    assert_equal '0', @tree.progress
+    assert data = @tree.current_data
+    assert_match(/where do you live/i, data['question'])
+    assert answers = data['answers']
+    assert_equal 2, answers.size
+  end
+
   test "should recognize finished state" do
     @tree = DecisionTree.new DECISION_TREE
     @tree.set_progress '0,1', '1'
