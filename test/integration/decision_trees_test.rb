@@ -29,7 +29,14 @@ class DecisionTreesTest < Redmine::IntegrationTest
     get "/decision_tree/#{@cf.id}", xhr: true, params: { progress: '', answer: '0'}
     assert_response :success
     assert_match(/where do you live/i, @response.body)
+  end
 
+  def test_search
+    log_user 'jsmith', 'jsmith'
+
+    get "/decision_tree/#{@cf.id}/search?q=post", xhr: true
+    assert_response :success
+    assert_match(/postal voting/i, @response.body)
   end
 
 end

@@ -15,6 +15,7 @@
   <% end if @intermediate_values %>
 
   hideModal('ajax-modal');
+
 <% else %>
   $('#ajax-modal').html('<%= j render partial: 'decision_trees/show' %>');
   showModal('ajax-modal', '400px');

@@ -6,6 +6,10 @@ class DecisionTree
     @data = JSON.parse json
   end
 
+  def search?
+    @data["style"] == "search"
+  end
+
   def set_progress(progress, current_answer)
     answers = progress.to_s.split(",")
     answers << current_answer if current_answer
@@ -35,6 +39,31 @@ class DecisionTree
     else
       ''
     end
+  end
+
+  def search(query)
+    all_answers = collect_answers
+    unless query.blank?
+      all_answers.select! do |text, progress, answer|
+        text.downcase.include? query.downcase
+      end
+    end
+    all_answers
+  end
+
+  # returns all the leaves as an array of [text, progress, answer]
+  def collect_answers(progress: [], data: @data)
+    result = []
+    if answers = data["answers"]
+      answers.each_with_index do |answer, idx|
+        if answer["answers"]
+          result += collect_answers progress: (progress + [idx]), data: answer
+        else
+          result << [ answer["option"], progress.join(","), idx.to_s ]
+        end
+      end
+    end
+    result
   end
 
   def finished?

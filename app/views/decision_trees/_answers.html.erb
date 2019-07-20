@@ -1,0 +1,4 @@
+<% @answers.each do |text, progress, answer| %>
+  <p><%= link_to text, '#', data: { progress: progress, answer: answer } %></p>
+<% end %>
+

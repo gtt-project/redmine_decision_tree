@@ -1,26 +1,47 @@
 <h3 class="title"><%= @field.name %></h3>
 
-<%= form_tag decision_tree_path(@field.id), remote: true do %>
+<%= form_tag decision_tree_path(@field.id), remote: true, id: 'decision-tree-form' do %>
   <%= hidden_field_tag :progress, @progress %>
   <%= hidden_field_tag :tag_id, params[:tag_id] %>
 
-  <p>
-    <%= @question %>
-  </p>
-  <% @answers.each_with_index do |answer, idx| %>
+  <% if @search %>
+    <%= hidden_field_tag :answer, '' %>
+
     <p>
-      <%= radio_button_tag 'answer', idx, idx == @selected_answer, id: "answer-#{idx}" %>
-      <%= label_tag "answer-#{idx}", answer['option'] %>
+      <%= label_tag 'decision_tree_search', l(:label_decision_tree_search) %>
+      <%= text_field_tag 'decision_tree_search', nil %>
     </p>
-  <% end %>
+    <%= javascript_tag "observeDecisionTreeSearchfield('#{ j search_decision_tree_path(@field.id) }');" %>
+
+    <div id="decision-tree-answers">
+      <%= render partial: "answers" %>
+    </div>
+
+    <p class="buttons">
+      <%= submit_tag l(:button_cancel), name: nil, onclick: "hideModal(this);", type: 'button' %>
+    </p>
+
+  <% else %>
+
+    <p>
+      <%= @question %>
+    </p>
+    <% @answers.each_with_index do |answer, idx| %>
+      <p>
+        <%= radio_button_tag 'answer', idx, idx == @selected_answer, id: "answer-#{idx}" %>
+        <%= label_tag "answer-#{idx}", answer['option'] %>
+      </p>
+    <% end %>
 
 
-  <p class="buttons">
-  <% if @progress.present? %>
-    <%= submit_tag l(:label_previous), name: 'back', onclick: "hideModal(this);" %>
+    <p class="buttons">
+    <% if @progress.present? %>
+      <%= submit_tag l(:label_previous), name: 'back', onclick: "hideModal(this);" %>
+    <% end %>
+      <%= submit_tag l(:label_next), name: nil, onclick: "hideModal(this);" %>
+      <%= submit_tag l(:button_cancel), name: nil, onclick: "hideModal(this);", type: 'button' %>
+    </p>
+
   <% end %>
-    <%= submit_tag l(:label_next), name: nil, onclick: "hideModal(this);" %>
-    <%= submit_tag l(:button_cancel), name: nil, onclick: "hideModal(this);", type: 'button' %>
-  </p>
 
 <% end %>

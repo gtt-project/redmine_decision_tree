@@ -13,6 +13,9 @@ class DecisionTreesController < ApplicationController
     if tree.finished?
       @value = tree.value
       @intermediate_values = tree.intermediate_values
+    elsif tree.search?
+      @search = true
+      @answers = tree.search params[:q]
     else
       data = tree.current_data
       @question = data['question']
@@ -21,6 +24,12 @@ class DecisionTreesController < ApplicationController
     end
 
     respond_to :js
+  end
+
+  def search
+    tree = DecisionTree.new @field.decision_tree_json
+    @answers = tree.search params[:q]
+    render layout: false
   end
 
   private

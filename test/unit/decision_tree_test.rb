@@ -55,8 +55,34 @@ class DecisionTreeTest < ActiveSupport::TestCase
     assert_equal 3, answers.size
   end
 
+  test "should search" do
+    answers = [
+      ["this is an answer", "0,1", "2"],
+      ["another one", "0,1", "1"],
+    ]
+    @tree.stubs(:collect_answers).returns(answers)
+    assert_equal answers, @tree.search(nil)
+    assert_equal answers, @tree.search('')
+    assert_equal answers, @tree.search('an')
+    assert_equal [answers[0]], @tree.search('is')
+  end
+
+  test "should collect answers" do
+    assert_equal [
+      ["In my registered electoral office.", "0,0", "0"],
+      ["In a different election office.", "0,0", "1"],
+      ["Via postal voting", "0,0", "2"],
+      ["I don't want to vote", "0,0", "3"],
+
+      ["In my nearest embassy or consulate.", "0,1", "0"],
+      ["Via postal voting", "0,1", "1"],
+      ["I don't want to vote", "0,1", "2"],
+
+      ["I'm younger than 18 years", "", "1"]
+    ], @tree.collect_answers
+  end
+
   test "should go back" do
-    @tree = DecisionTree.new DECISION_TREE
     assert_equal 1, @tree.back('0,1')
 
     refute @tree.finished?
@@ -68,7 +94,6 @@ class DecisionTreeTest < ActiveSupport::TestCase
   end
 
   test "should recognize finished state" do
-    @tree = DecisionTree.new DECISION_TREE
     @tree.set_progress '0,1', '1'
     assert @tree.finished?
     assert_equal 'postal vote', @tree.value
