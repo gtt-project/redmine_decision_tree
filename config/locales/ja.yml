@@ -1,3 +1,5 @@
 ja:
   field_decision_tree_json: '決定木JSON'
   label_decision_tree_button: '入力選択'
+  label_decision_tree_button_search: '検索'
+  label_decision_tree_search: 検索
