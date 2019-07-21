@@ -1,4 +1,5 @@
 en:
   field_decision_tree_json: Decision Tree JSON
   label_decision_tree_button: 'Open Wizard'
+  label_decision_tree_button_search: 'Search'
   label_decision_tree_search: Search
