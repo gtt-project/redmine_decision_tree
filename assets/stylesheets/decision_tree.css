@@ -1,0 +1,11 @@
+
+#decision-tree-answers {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#decision-tree-answers p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
