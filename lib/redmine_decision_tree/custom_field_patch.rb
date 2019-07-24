@@ -10,7 +10,10 @@ module RedmineDecisionTree
 
     def validate_custom_field
       super
-      unless tree = decision_tree and tree.valid?
+      if decision_tree_json.present? and not (
+           tree = decision_tree and tree.valid?
+         )
+
         errors.add :decision_tree_json, :invalid
       end
     end
