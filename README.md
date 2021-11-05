@@ -8,7 +8,7 @@ Redmine plugin that adds decision-tree wizards to custom fields.
 
 ## Installation
 
-To install Redmine Chatwoot plugin, download or clone this repository in your Redmine installation plugins directory!
+To install Redmine Admissions plugin, download or clone this repository in your Redmine installation plugins directory!
 
 ```
 cd path/to/plugin/directory
