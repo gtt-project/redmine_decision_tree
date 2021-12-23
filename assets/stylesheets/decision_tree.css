@@ -9,3 +9,16 @@
   margin-bottom: 5px;
 }
 
+#decision-tree-answers input {
+  border: none;
+  background-color: transparent;
+  color: #2996cc;
+  padding: 0px;
+  margin: 0px;
+  height: 16px;
+  line-height: 16px;
+}
+
+#decision-tree-answers input:hover {
+  text-decoration: underline;
+}

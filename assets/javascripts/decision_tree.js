@@ -35,15 +35,13 @@ $(document).on('click', 'button.decision-tree', function(e){
   e.preventDefault();
 });
 
-$(document).on('click', '#decision-tree-answers a', function(e){
-  var a = $(this);
+function handleClickOnAnswer(elem) {
+  var input = $(elem);
 
-  console.log(a.data('progress'));
-  console.log(a.data('answer'));
+  console.log(input.data('progress'));
+  console.log(input.data('answer'));
 
-  $('#progress').val(a.data('progress'));
-  $('#answer').val(a.data('answer'));
-  $('#decision-tree-form').submit();
-  hideModal(this);
-  return false;
-});
+  $('#progress').val(input.data('progress'));
+  $('#answer').val(input.data('answer'));
+  hideModal(elem);
+}
