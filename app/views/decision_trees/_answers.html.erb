@@ -1,4 +1,4 @@
 <% @answers.each do |text, progress, answer| %>
-  <p><%= link_to text, '#', data: { progress: progress, answer: answer } %></p>
+  <p><%= submit_tag text, data: { progress: progress, answer: answer }, onclick: 'handleClickOnAnswer(this)' %></p>
 <% end %>
 
