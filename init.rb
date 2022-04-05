@@ -1,4 +1,5 @@
-require 'redmine'
+require File.expand_path('../lib/redmine_decision_tree/view_hooks', __FILE__)
+require File.expand_path('../lib/redmine_decision_tree/field_format_patch', __FILE__) # intentionally breaking auto-reloading of the patch to avoid chaining of the added link on reloads
 
 Redmine::Plugin.register :redmine_decision_tree do
   name 'Redmine Decision Tree plugin'
@@ -12,6 +13,10 @@ Redmine::Plugin.register :redmine_decision_tree do
 
 end
 
-ActiveSupport::Reloader.to_prepare do
+if Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
   RedmineDecisionTree.setup
+else
+  ActiveSupport::Reloader.to_prepare do
+    RedmineDecisionTree.setup
+  end
 end

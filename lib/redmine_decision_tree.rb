@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "redmine_decision_tree/view_hooks"
-require "redmine_decision_tree/field_format_patch" # intentionally breaking auto-reloading of the patch to avoid chaining of the added link on reloads
-
 module RedmineDecisionTree
 
 
