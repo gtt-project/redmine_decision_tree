@@ -16,6 +16,7 @@ end
 if Rails.version > '6.0' && Rails.autoloaders.zeitwerk_enabled?
   RedmineDecisionTree.setup
 else
+  require 'redmine_decision_tree'
   ActiveSupport::Reloader.to_prepare do
     RedmineDecisionTree.setup
   end
